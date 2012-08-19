@@ -7,7 +7,7 @@ FROM: cpu.arm.assembler => B ;
 
 [ 0xea000000 ] [ 0 B ] test-opcode
 [ 0xeb000000 ] [ 0 BL ] test-opcode
-! [ 0xe12fff30 ] [ R0 BLX ] test-opcode
+t have-BLX? [ [ 0xe12fff30 ] [ R0 BLX ] test-opcode ] with-variable
 
 [ 0xe24cc004 ] [ IP IP 4 SUB ] test-opcode
 [ 0xe24cb004 ] [ FP IP 4 SUB ] test-opcode
