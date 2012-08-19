@@ -60,3 +60,8 @@ have-BX? [ R3 BX ] test-insn-emulation
 [ 0xe08310b4 ] [ R1 R3 R4 <+!> STRH ] test-opcode
 
 [ 0xe16f1f10 ] [ R1 R0 CLZ ] test-opcode
+
+[ 0xe0a32190 ] [ R2 R3 R0 R1 UMLAL ] test-opcode
+[ 0xe0832190 ] [ R2 R3 R0 R1 UMULL ] test-opcode
+[ 0xe0b32190 ] [ R2 R3 R0 R1 SMLAL ] test-opcode
+[ 0xe0932190 ] [ R2 R3 R0 R1 SMULL ] test-opcode

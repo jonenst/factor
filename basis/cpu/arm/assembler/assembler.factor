@@ -207,8 +207,8 @@ PRIVATE>
 : (S/UMLAL)  ( RdLo RdHi Rm Rs s a -- )
     {
         { 1 23 }
-        22
         21
+        20
         { register 8 }
         { register 0 }
         { register 16 }
