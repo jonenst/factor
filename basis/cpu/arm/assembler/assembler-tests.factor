@@ -8,6 +8,17 @@ FROM: cpu.arm.assembler => B ;
 [ 0xea000000 ] [ 0 B ] test-opcode
 [ 0xeb000000 ] [ 0 BL ] test-opcode
 t have-BLX? [ [ 0xe12fff30 ] [ R0 BLX ] test-opcode ] with-variable
+t have-BX? [ [ 0xe12fff11 ] [ R1 BX ] test-opcode ] with-variable
+
+: with-on/off ( variable quot -- )
+  [ t f ] 2dip [ with-variable ] 2curry bi@ ; inline
+
+: test-insn-emulation ( variable quot -- )
+  [ [ { } make ] curry with-on/off = ]
+  2curry { f } swap unit-test ;
+
+have-BLX? [ R2 BLX ] test-insn-emulation
+have-BX? [ R3 BX ] test-insn-emulation
 
 [ 0xe24cc004 ] [ IP IP 4 SUB ] test-opcode
 [ 0xe24cb004 ] [ FP IP 4 SUB ] test-opcode
