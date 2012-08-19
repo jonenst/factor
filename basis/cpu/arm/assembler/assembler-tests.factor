@@ -26,6 +26,9 @@ have-BX? [ R3 BX ] test-insn-emulation
 [ 0xe08c0109 ] [ R0 IP R9 2 <LSL> ADD ] test-opcode
 [ 0x02850004 ] [ R0 R5 4 EQ ADD ] test-opcode
 [ 0x00000000 ] [ R0 R0 R0 EQ AND ] test-opcode
+[ 0x00000010 ] [ R0 R0 R0 R0 <LSL> EQ AND ] test-opcode
+[ 0x02000000 ] [ R0 R0 0 EQ AND ] test-opcode
+[ 0x02000c00 ] [ R0 R0 0 12 <IMM> EQ AND ] test-opcode
 
 [ 0xe1a0c00c ] [ IP IP MOV ] test-opcode
 [ 0xe1a0c00d ] [ IP SP MOV ] test-opcode
