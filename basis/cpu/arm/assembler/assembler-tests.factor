@@ -58,3 +58,5 @@ have-BX? [ R3 BX ] test-insn-emulation
 [ 0xe1b310d4 ] [ R1 R3 R4 <!+> LDRSB ] test-opcode
 [ 0xe0c317bb ] [ R1 R3 123 <+!> STRH ] test-opcode
 [ 0xe08310b4 ] [ R1 R3 R4 <+!> STRH ] test-opcode
+
+[ 0xe16f1f10 ] [ R1 R0 CLZ ] test-opcode
