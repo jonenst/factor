@@ -218,6 +218,7 @@ find_architecture() {
        ppc64) ARCH=ppc;;
        *86) ARCH=x86;;
        *86_64) ARCH=x86;;
+       armv7l) ARCH=arm;;
        "Power Macintosh") ARCH=ppc;;
     esac
 }
@@ -316,6 +317,9 @@ set_build_info() {
     if [[ $OS == linux && $ARCH == ppc ]] ; then
         MAKE_IMAGE_TARGET=linux-ppc.32
         MAKE_TARGET=linux-ppc-32
+    elif [[ $OS == linux && $ARCH == arm ]] ; then
+        MAKE_IMAGE_TARGET=linux-arm
+        MAKE_TARGET=linux-arm
     elif [[ $OS == windows && $ARCH == x86 && $WORD == 64 ]] ; then
         MAKE_IMAGE_TARGET=windows-x86.64
         MAKE_TARGET=windows-x86-64

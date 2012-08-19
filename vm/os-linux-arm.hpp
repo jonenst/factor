@@ -5,6 +5,16 @@
 namespace factor
 {
 
+//FIXME
+inline static unsigned int uap_fpu_status(void *uap)
+{
+	return 0;
+}
+//FIXME
+inline static void uap_clear_fpu_status(void *uap)
+{
+
+}
 void flush_icache(cell start, cell len);
 
 #define UAP_STACK_POINTER(ucontext) (((ucontext_t *)ucontext)->uc_mcontext.arm_sp)

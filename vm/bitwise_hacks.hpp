@@ -29,6 +29,15 @@ inline cell log2(cell x)
 #else
 	#error Unsupported compiler
 #endif
+#elif defined(FACTOR_ARM)
+	//FIXME
+        int i;
+        for (i=31; i>=0; --i)
+                if (x & 0x80000000)
+                        break;
+                else
+                        x <<= 1;
+        n = i;
 #else
 	#error Unsupported CPU
 #endif

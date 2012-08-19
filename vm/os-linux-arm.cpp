@@ -3,6 +3,7 @@
 namespace factor
 {
 
+//FIXME
 void flush_icache(cell start, cell len)
 {
 	int result;
@@ -14,6 +15,7 @@ void flush_icache(cell start, cell len)
 	/* Assembly swiped from
 	http://lists.arm.linux.org.uk/pipermail/linux-arm/2002-July/003931.html
 	*/
+	/*
 	__asm__ __volatile__ (
 		"mov     r0, %1\n"
 		"sub     r1, %2, #1\n"
@@ -23,7 +25,8 @@ void flush_icache(cell start, cell len)
 		: "=r" (result)
 		: "r" (start), "r" (start + len)
 		: "r0","r1","r2");
-
+	*/
+	result = -1;
 	if(result < 0)
 		critical_error("flush_icache() failed",result);
 }
