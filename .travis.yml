@@ -1,0 +1,14 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+os:
+  - linux
+  - osx
+branches:
+  only:
+    - master
+sudo: required
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
+script: ./build.sh net-bootstrap < /dev/null
