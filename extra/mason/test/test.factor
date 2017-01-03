@@ -57,7 +57,7 @@ M: method word-vocabulary "method-generic" word-prop word-vocabulary ;
 
 : do-tests ( -- )
     forget-tests? on
-    test-all test-failures get
+    test-all-chunked-env test-failures get
     test-all-vocabs-file
     test-all-errors-file
     do-step ;
@@ -109,10 +109,7 @@ M: method word-vocabulary "method-generic" word-prop word-vocabulary ;
         bootstrap-time get boot-time-file to-file
         check-boot-image [ 1 exit ] when
         [ do-load ] benchmark load-time-file to-file
-        [ generate-help ] benchmark html-help-time-file to-file
         [ do-tests ] benchmark test-time-file to-file
-        [ do-help-lint ] benchmark help-lint-time-file to-file
-        [ do-benchmarks ] benchmark benchmark-time-file to-file
         do-compile-errors
     ] with-directory ;
 

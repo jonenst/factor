@@ -1,13 +1,13 @@
 ! Copyright (C) 2003, 2010 Slava Pestov.
 ! See http://factorcode.org/license.txt for BSD license.
 USING: accessors arrays assocs combinators command-line
-compiler.units continuations debugger effects fry
-generalizations io io.files.temp io.files.unique kernel lexer
-locals macros namespaces parser prettyprint quotations sequences
-sequences.generalizations source-files source-files.errors
-source-files.errors.debugger splitting stack-checker summary
-tools.errors unicode vocabs vocabs.files vocabs.metadata
-vocabs.parser words ;
+compiler.units continuations debugger effects environment fry
+generalizations grouping io io.files.temp io.files.unique kernel
+lexer locals macros math math.parser namespaces parser
+prettyprint quotations sequences sequences.generalizations
+source-files source-files.errors source-files.errors.debugger
+splitting stack-checker summary tools.errors unicode vocabs
+vocabs.files vocabs.metadata vocabs.parser words ;
 FROM: vocabs.hierarchy => load ;
 IN: tools.test
 
@@ -183,6 +183,15 @@ M: test-failure error. ( error -- )
 : test ( prefix -- ) loaded-child-vocab-names test-vocabs ;
 
 : test-all ( -- ) loaded-vocab-names filter-don't-test test-vocabs ;
+
+: test-all-chunked ( k n -- )
+    loaded-vocab-names filter-don't-test
+    swap over length swap [ 1 - + ] keep /i group nth test-vocabs ;
+
+: test-all-chunked-env ( -- )
+    "FACTOR_TESTS_CHUNK" get
+    [ "FACTOR_TESTS_CHUNK" os-env ] unless*
+    "/" split first2 [ string>number ] bi@ [ 1 - ] dip test-all-chunked ;
 
 : test-main ( -- )
     command-line get [ [ load ] [ test ] bi ] each ;
