@@ -12,4 +12,4 @@ sudo: required
 dist: trusty
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
-script: ./build.sh net-bootstrap < /dev/null
+script: ./build.sh net-bootstrap < /dev/null && ./factor -run=mason.test < /dev/null
