@@ -5,14 +5,15 @@ compiler:
 os:
   - linux
   - osx
-env:
-  - FACTOR_TESTS_CHUNK=1/2
-  - FACTOR_TESTS_CHUNK=2/2
 branches:
   only:
     - master
 sudo: required
 dist: trusty
+addons:
+  apt:
+    packages:
+      - links
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
-script: ./build.sh net-bootstrap < /dev/null && ./factor -run=mason.test < /dev/null
+script: ./build.sh net-bootstrap < /dev/null && mkdir -p mason/builds && ( cd mason/builds && ../../factor -run=mason.test < /dev/null ) && ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable'  && links -dump report ) && [ ! -s mason/test-all-errors ]
