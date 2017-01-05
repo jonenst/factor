@@ -16,4 +16,10 @@ addons:
       - links
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
-script: ./build.sh net-bootstrap < /dev/null && mkdir -p mason/builds && ( cd mason/builds && ../../factor -run=mason.test < /dev/null ) && ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable'  && links -dump report ) && [ ! -s mason/test-all-errors ]
+script: >
+  ./build.sh net-bootstrap < /dev/null &&
+  mkdir -p mason/builds &&
+  ( cd mason/builds && ../../factor -run=mason.test < /dev/null ) &&
+  ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable' &&
+      links -dump report ) &&
+  [ ! -s mason/test-all-errors ]
