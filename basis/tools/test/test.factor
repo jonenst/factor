@@ -191,7 +191,8 @@ M: test-failure error. ( error -- )
 : test-all-chunked-env ( -- )
     "FACTOR_TESTS_CHUNK" get
     [ "FACTOR_TESTS_CHUNK" os-env ] unless*
-    "/" split first2 [ string>number ] bi@ [ 1 - ] dip test-all-chunked ;
+    [ "/" split first2 [ string>number ] bi@ [ 1 - ] dip test-all-chunked ]
+    [ test-all ] if* ;
 
 : test-main ( -- )
     command-line get [ [ load ] [ test ] bi ] each ;
