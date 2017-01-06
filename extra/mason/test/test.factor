@@ -38,7 +38,7 @@ IN: mason.test
     '[ _ load-from-root-no-restarts ] map concat ;
 
 : do-load ( -- )
-    { } clone
+    "" load-no-restarts
     [ keys load-all-vocabs-file to-file ]
     [ load-all-errors-file utf8 [ load-failures. ] with-file-writer ]
     bi ;
@@ -107,9 +107,8 @@ M: method word-vocabulary "method-generic" word-prop word-vocabulary ;
     ".." [
         run-mason-rc check-user-init-errors [ 1 exit ] when
         bootstrap-time get boot-time-file to-file
-        ! check-boot-image [ 1 exit ] when
+        check-boot-image [ 1 exit ] when
         [ do-load ] benchmark load-time-file to-file
-        0 load-time-file to-file
         0 html-help-time-file to-file
         [ do-tests ] benchmark test-time-file to-file
         [ do-help-lint ] benchmark help-lint-time-file to-file
