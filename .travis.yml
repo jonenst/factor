@@ -14,6 +14,11 @@ addons:
   apt:
     packages:
       - links
+      - libblas-dev
+      - libfftw3-dev
+      - libmagic-dev
+      - libsnappy-dev
+      - libzmq-dev
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
   - >
