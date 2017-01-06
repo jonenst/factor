@@ -26,5 +26,4 @@ script: >
   ( cd mason/builds && ../../factor -run=mason.test < /dev/null ) &&
   ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable' &&
       links -dump report ) &&
-  cat mason/* &&
   [ ! -s mason/test-all-errors ]
