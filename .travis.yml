@@ -21,10 +21,10 @@ before_install:
     ( cd udis86-1.7.2/ && ./autogen.sh && ./configure --enable-shared=yes && make && sudo make install ) &&
     ( [[ "$TRAVIS_OS_NAME" != "osx" ]] && sudo ldconfig || true )
 script: >
-  ./build.sh net-bootstrap < /dev/null &> bootstrap_log &&
+  ./build.sh net-bootstrap < /dev/null &&
   mkdir -p mason/builds &&
-  ( cd mason/builds && ../../factor -run=mason.test &> tests_log < /dev/null ) &&
+  ( cd mason/builds && ../../factor -run=mason.test < /dev/null ) &&
   ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable' &&
       links -dump report ) &&
-  cat bootstrap_log && cat mason/builds/tests_log && cat mason/* &&
+  cat mason/* &&
   [ ! -s mason/test-all-errors ]
