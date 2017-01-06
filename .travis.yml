@@ -29,7 +29,9 @@ before_install:
     ( cd udis86-1.7.2/ && ./autogen.sh && ./configure --enable-shared=yes && make && sudo make install ) &&
     ( [[ "$TRAVIS_OS_NAME" != "osx" ]] && sudo ldconfig || true )
 script: >
+  sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';" &&
   ./build.sh net-bootstrap < /dev/null &&
+  ./factor -e='USING: db.postgresql namespaces memory ; T{ postgresql-db f "localhost" f f f f "postgres" "postgres" } \ postgresql-db set-global save' &&
   mkdir -p mason/builds &&
   ( cd mason/builds && ../../factor -run=mason.test < /dev/null | grep "Loading resource\|Unit Test" ) &&
   ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable' ) &&
