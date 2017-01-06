@@ -19,6 +19,9 @@ addons:
       - libmagic-dev
       - libsnappy-dev
       - libzmq-dev
+      - libpq-dev
+      - postgresql
+      - redis-server
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
   - >
