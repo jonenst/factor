@@ -23,7 +23,7 @@ before_install:
 script: >
   ./build.sh net-bootstrap < /dev/null &&
   mkdir -p mason/builds &&
-  ( cd mason/builds && ../../factor -run=mason.test < /dev/null ) &&
+  ( cd mason/builds && ../../factor -run=mason.test < /dev/null | grep "Loading resource\|Unit Test" ) &&
   ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable' ) &&
   ( [[ "$TRAVIS_OS_NAME" != "osx" ]] && links -dump mason/report || cat mason/report ) &&
   [ ! -s mason/test-all-errors ]
