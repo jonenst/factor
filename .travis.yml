@@ -10,6 +10,9 @@ branches:
     - master
 sudo: required
 dist: trusty
+services:
+  - postgresql
+  - redis-server
 addons:
   apt:
     packages:
@@ -20,8 +23,6 @@ addons:
       - libsnappy-dev
       - libzmq-dev
       - libpq-dev
-      - postgresql
-      - redis-server
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
   - >
@@ -29,9 +30,8 @@ before_install:
     ( cd udis86-1.7.2/ && ./autogen.sh && ./configure --enable-shared=yes && make && sudo make install ) &&
     ( [[ "$TRAVIS_OS_NAME" != "osx" ]] && sudo ldconfig || true )
 script: >
-  sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';" &&
   ./build.sh net-bootstrap < /dev/null &&
-  ./factor -e='USING: db.postgresql namespaces memory ; T{ postgresql-db f "localhost" f f f f "postgres" "postgres" } \ postgresql-db set-global save' &&
+  ./factor -e='USING: db.postgresql namespaces memory ; T{ postgresql-db f "localhost" f f f f "postgres" "" } \ postgresql-db set-global save' &&
   mkdir -p mason/builds &&
   ( cd mason/builds && ../../factor -run=mason.test < /dev/null | grep "Loading resource\|Unit Test" ) &&
   ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable' ) &&
