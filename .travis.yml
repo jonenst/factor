@@ -31,7 +31,6 @@ before_install:
     ( [[ "$TRAVIS_OS_NAME" != "osx" ]] && sudo ldconfig || true )
 script: >
   ./build.sh net-bootstrap < /dev/null &&
-  ./factor -e='USING: db.postgresql namespaces memory ; T{ postgresql-db f "localhost" f f f f "postgres" "" } \ postgresql-db set-global save' &&
   mkdir -p mason/builds &&
   ( cd mason/builds && ../../factor -run=mason.test < /dev/null | grep "Loading resource\|Unit Test" ) &&
   ( cd mason && ../factor -e='USING: mason.config mason.report namespaces ; "." builds-dir [ successful-report ] with-variable' ) &&
