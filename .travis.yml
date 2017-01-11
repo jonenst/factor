@@ -36,18 +36,21 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions zeromq > /dev/null || brew install zeromq; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions postgresql > /dev/null || brew install postgresql; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions fftw > /dev/null || brew install fftw; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start memcached; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start redis; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start postgresql; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start memcached; fi
   - >
     wget https://github.com/vmt/udis86/archive/v1.7.2.tar.gz && tar xzvf v1.7.2.tar.gz &&
     ( cd udis86-1.7.2/ && ./autogen.sh && ./configure --enable-shared=yes && make && sudo make install ) &&
     ( [[ "$TRAVIS_OS_NAME" != "osx" ]] && sudo ldconfig || true )
   - >
-    if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
-      (
       git clone -b v1.2 git://github.com/couchbase/forestdb &&
       cd forestdb && mkdir build && cd build && cmake ../ &&
-      make all && sudo cp libforestdb.so /usr/lib && sudo ldconfig ;
-      )
-    fi
+      make all &&
+      [[ "$TRAVIS_OS_NAME" != "osx" ]]
+        && ( sudo cp libforestdb.so /usr/lib && sudo ldconfig )
+        || ( true )
 script: >
   ( echo "=== Bootstrap ===" ;  ./build.sh net-bootstrap < /dev/null ; ret=$? ; echo "=== $ret ==="; [ $ret == 0 ] )  &&
   ( echo "=== Factor Configure Postgresql ===" ; ./factor -e='USING: db.postgresql namespaces memory ; T{ postgresql-db f "localhost" f f f f "postgres" "" } \ postgresql-db set-global save' ; ret=$? ; echo "=== $ret ==="; [ $ret == 0 ] ) &&
