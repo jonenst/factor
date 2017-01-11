@@ -28,14 +28,14 @@ addons:
       - libsnappy-dev
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./build.sh deps-macosx ; else ./build.sh deps-apt-get ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install snappy; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install cmake; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libmagic; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install memcached; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install redis; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install zeromq; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install postgresql; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install fftw; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions snappy > /dev/null || brew install snappy; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions cmake > /dev/null || brew install cmake; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions libmagic > /dev/null || brew install libmagic; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions memcached > /dev/null || brew install memcached; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions redis > /dev/null || brew install redis; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions zeromq > /dev/null || brew install zeromq; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions postgresql > /dev/null || brew install postgresql; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew ls --versions fftw > /dev/null || brew install fftw; fi
   - >
     wget https://github.com/vmt/udis86/archive/v1.7.2.tar.gz && tar xzvf v1.7.2.tar.gz &&
     ( cd udis86-1.7.2/ && ./autogen.sh && ./configure --enable-shared=yes && make && sudo make install ) &&
